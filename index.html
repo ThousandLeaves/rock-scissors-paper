@@ -1,3 +1,64 @@
 <script>
-   // Some smashing rock-scissors-paper stuff happens here~
+
+   let score = 0;
+
+   function computerPlay() {
+      switch (Math.floor(Math.random * 2)) {
+         case 0:
+            return "rock";
+            break;
+         case 1:
+            return "paper";
+            break;
+         case 2:
+            return "scissors";
+            break;
+         default:
+            return "rock";
+            break;
+      }
+   }
+
+   function playRound(playerSelection, computerSelection = computerPlay()) {
+      let ps = playerSelection.toLowerCase();
+      let cs = computerSelection;
+      let result = (ps == "rock" && cs == "scissors") ? "win"
+         : (ps == "paper" && cs == "rock")            ? "win"
+         : (ps == "scissors" && cs == "paper")        ? "win"
+         : (ps == cs)                                 ? "draw"
+         : "lose";
+      if (result == "win") {
+         score += 1;
+         return "You win, " + ps + " beats " + cs + "!";
+      }
+      else if (result == "lose") {
+         score -= 1;
+         return "You lose, " + cs + " beats " + ps + "!";
+
+      }
+      else {
+         return "Draw! You both chose " + ps + ".";
+      }
+   }
+
+   function game() {
+      let playerInput = ".";
+      for(i = 0; i < 5; i++) {
+         do {
+            playerInput = prompt("Please choose to play rock, paper, or scissors.");
+         } while (!(playerInput.toLowerCase() in { "rock": "", "paper": "", "scissors": "" } ));
+
+         console.log(playRound(playerInput));
+         playerInput = ".";
+      }
+
+      if (score > 0) {
+         console.log("Congratulations! You've won the majority of games!");
+      }
+      else {
+         console.log("Sorry, the computer won more games than you.");
+      }
+   }
+
+   game();
 </script>
